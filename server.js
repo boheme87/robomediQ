@@ -44,7 +44,7 @@ slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg,text) => {
     userStories.forEach(story => {
     allUSLinks = "UserStory " + formatDeepLink(HODINN_DEEP_LINK,story) + "\n";
   });
-  msg.say(">" + allUsLinks);
+  msg.say(">" + allUSLinks);
 })
 
 
