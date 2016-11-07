@@ -45,11 +45,13 @@ console.log("> " + formatDeepLink(HODINN_DEEP_LINK,story));
 //*********************************************
 // /^.*(INN-\d+).*/i
 slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg) => {
-    var say = msg.say("Let me help you with that :)");
+  var say = msg.say("Let me help you with that :)").say(" test")
+
   var userStories = userStoryIdentifiersFromMessage(msg,HODINN_US_DETECTOR);
+  console.log("userstories.length: " + userStories.length);
     userStories.forEach(story => {
     say("> " + formatDeepLink(HODINN_DEEP_LINK,story));
-  })
+  });
 })
 
 
