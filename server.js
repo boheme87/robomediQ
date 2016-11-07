@@ -31,7 +31,7 @@ I will respond to the following messages:
 
 // response to the user typing "help"
 slapp.message('help', ['mention', 'direct_message'], (msg) => {
-  msg.say(HELP_TEXT)
+  msg.say("BAZINGA")
 })
 
 // "Conversation" flow that tracks state - kicks off when user says hi, hello or hey
