@@ -80,29 +80,10 @@ slapp
   })
 
 // Can use a regex as well
-slapp.message(/^(thanks|thank you)/i, ['mention', 'direct_message'], (msg) => {
+slapp.message(/^(INN-\d+)/i, ['ambient'], (msg) => {
   // You can provide a list of responses, and a random one will be chosen
   // You can also include slack emoji in your responses
-  msg.say([
-    "You're welcome :smile:",
-    'You bet',
-    ':+1: Of course',
-    'Anytime :sun_with_face: :full_moon_with_face:'
-  ])
-})
-
-// demonstrate returning an attachment...
-slapp.message('attachment', ['mention', 'direct_message'], (msg) => {
-  msg.say({
-    text: 'Check out this amazing attachment! :confetti_ball: ',
-    attachments: [{
-      text: 'Slapp is a robust open source library that sits on top of the Slack APIs',
-      title: 'Slapp Library - Open Source',
-      image_url: 'https://storage.googleapis.com/beepboophq/_assets/bot-1.22f6fb.png',
-      title_link: 'https://beepboophq.com/',
-      color: '#7CD197'
-    }]
-  })
+  msg.say("So you want US INN-???")
 })
 
 // Catch-all for any other responses not handled above
