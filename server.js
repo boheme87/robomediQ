@@ -33,16 +33,27 @@ var formatDeepLink = function(baseUrl, storyIdentifier) {
   return "<" + baseUrl + storyIdentifier + "|" + storyIdentifier + ">";
 };
 
+
+// var messageTest = "Wir müssen INN-123 und INN-456 , INN-748 machen";
+// var outputArray = userStoryIdentifiersFromMessage(messageTest,HODINN_US_DETECTOR);
+// console.log(outputArray.length);
+// var allUSLinks = "";
+// var userStories = userStoryIdentifiersFromMessage(messageTest,HODINN_US_DETECTOR);
+//  userStories.forEach(story => {
+//  allUSLinks = allUSLinks.concat("UserStory " + formatDeepLink(HODINN_DEEP_LINK,story) + "\n");
+// });
+// console.log(allUSLinks);
+
 //*********************************************
 // Setup different handlers for messages
 //*********************************************
 // /^.*(INN-\d+).*/i
 slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg,text) => {
    msg.say("Let me help you with that :)")
-   var allUSLinks = "";
+  var allUSLinks = "";
   var userStories = userStoryIdentifiersFromMessage(text,HODINN_US_DETECTOR);
     userStories.forEach(story => {
-    allUSLinks = "UserStory " + formatDeepLink(HODINN_DEEP_LINK,story) + "\n";
+    allUSLinks = allUsLinks.concat("UserStory " + formatDeepLink(HODINN_DEEP_LINK,story) + "\n");
   });
   msg.say(">" + allUSLinks);
 })
