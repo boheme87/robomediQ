@@ -15,7 +15,6 @@ var slapp = Slapp({
   context: Context()
 })
 
-
 const HODINN_US_DETECTOR = /(INN-\d+)/gi; //case insensitive (i) and multiple times (g)
 const HODINN_DEEP_LINK = "https://humediq.jira.com/browse/";
 
@@ -34,23 +33,18 @@ var formatDeepLink = function(baseUrl, storyIdentifier) {
   return "<" + baseUrl + storyIdentifier + "|" + storyIdentifier + ">";
 };
 
-var msg = "hello INN-123 I have also INN-6 and INN-123123 ass";
-var userStories = userStoryIdentifiersFromMessage(msg,HODINN_US_DETECTOR);
-  userStories.forEach(story => {
-console.log("> " + formatDeepLink(HODINN_DEEP_LINK,story));
-});
 
 //*********************************************
 // Setup different handlers for messages
 //*********************************************
 // /^.*(INN-\d+).*/i
-slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg) => {
-  var say = msg.say("Let me help you with that :)").say(" test")
+slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg,text) => {
+  var say = msg.say("Let me help you with that :)")
 
-  var userStories = userStoryIdentifiersFromMessage(msg,HODINN_US_DETECTOR);
+  var userStories = userStoryIdentifiersFromMessage(text,HODINN_US_DETECTOR);
   console.log("userstories.length: " + userStories.length);
     userStories.forEach(story => {
-    say("> " + formatDeepLink(HODINN_DEEP_LINK,story));
+    msg.say("> " + formatDeepLink(HODINN_DEEP_LINK,story));
   });
 })
 
