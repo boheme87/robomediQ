@@ -55,7 +55,7 @@ slapp.message('introduce', ['direct_mention', 'direct_message'], (msg) => {
 
 slapp.message('.*', ['direct_mention', 'direct_message'], (msg) => {
   // respond only 40% of the time
-  if (Math.random() < 0.4) {
+  if (Math.random() < 0.8) {
     msg.say([':wave:', ':pray:', ':raised_hands:'])
   }
 })
