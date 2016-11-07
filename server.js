@@ -23,7 +23,7 @@ var userStoryIdentifiersFromMessage = function(message, regexToUse) {
   var match = null;
   while ((match = regexToUse.exec( message )) != null)
     {
-        matches = matches.concat(match);
+      matches.push(match[0]);
     };
   return matches;
 
@@ -33,19 +33,18 @@ var formatDeepLink = function(baseUrl, storyIdentifier) {
   return "<" + baseUrl + storyIdentifier + "|" + storyIdentifier + ">";
 };
 
-
 //*********************************************
 // Setup different handlers for messages
 //*********************************************
 // /^.*(INN-\d+).*/i
 slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg,text) => {
-  var say = msg.say("Let me help you with that :)")
-
+   msg.say("Let me help you with that :)")
+   var allUSLinks = "";
   var userStories = userStoryIdentifiersFromMessage(text,HODINN_US_DETECTOR);
-  console.log("userstories.length: " + userStories.length);
     userStories.forEach(story => {
-    msg.say("> " + formatDeepLink(HODINN_DEEP_LINK,story));
+    allUSLinks = "UserStory " + formatDeepLink(HODINN_DEEP_LINK,story) + "\n";
   });
+  msg.say(">" + allUsLinks);
 })
 
 
