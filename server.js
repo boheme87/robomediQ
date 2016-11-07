@@ -34,19 +34,21 @@ var formatDeepLink = function(baseUrl, storyIdentifier) {
   return "<" + baseUrl + storyIdentifier + "|" + storyIdentifier + ">";
 };
 
-var userstories = "hello INN-123 I have also INN-6 and INN-123123 ass";
-var output = userStoryIdentifiersFromMessage(userstories,HODINN_US_DETECTOR);
-
+var msg = "hello INN-123 I have also INN-6 and INN-123123 ass";
+var userStories = userStoryIdentifiersFromMessage(msg,HODINN_US_DETECTOR);
+  userStories.forEach(story => {
+console.log("> " + formatDeepLink(HODINN_DEEP_LINK,story));
+});
 
 //*********************************************
 // Setup different handlers for messages
 //*********************************************
 // /^.*(INN-\d+).*/i
 slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg) => {
-  msg.say("Let me help you with that :)");
+    var say = msg.say("Let me help you with that :)");
   var userStories = userStoryIdentifiersFromMessage(msg,HODINN_US_DETECTOR);
     userStories.forEach(story => {
-    msg.say("> " + formatDeepLink(HODINN_DEEP_LINK,story));
+    say("> " + formatDeepLink(HODINN_DEEP_LINK,story));
   })
 })
 
