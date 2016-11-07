@@ -16,25 +16,33 @@ var slapp = Slapp({
 })
 
 
-var HELP_TEXT = `
-I will respond to the following messages:
-\`help\` - to see this message.
-\`hi\` - to demonstrate a conversation that tracks state.
-\`thanks\` - to demonstrate a simple response.
-\`<type-any-other-text>\` - to demonstrate a random emoticon response, some of the time :wink:.
-\`attachment\` - to see a Slack attachment message.
-`
+
+const HODINN_US_DETECTOR = /^.*(INN-\d+)+.*/gi; //case insensitive (i) and multiple times (g)
+const HODINN_DEEP_LINK = "https://humediq.jira.com/browse/";
+
+var userStoryIdentifiersFromMessage = function(message, regexToUse) {
+  return regexToUse.exec(message);
+};
+
+var formatDeepLink = function(baseUrl, storyIdentifier) {
+  return "<" + baseUrl + storyIdentifier + "|" + storyIdentifier + ">";
+};
+
+// var userstories = "hello INN-123 I have also INN-6 and INN-123123 ass";
+// var messageRegex = HODINN_US_DETECTOR;
+// var hodinnmatch = messageRegex.exec(userstories);
+
 
 //*********************************************
 // Setup different handlers for messages
 //*********************************************
 
-// Can use a regex as well
-slapp.message(/^(INN-\d+)/i, ['ambient'], (msg) => {
-  // You can provide a list of responses, and a random one will be chosen
-  // You can also include slack emoji in your responses
-  msg.say({
-    text: 'So does this one: <http://www.foo.com|www.foo.com>'})
+slapp.message(HODINN_US_DETECTOR, ['ambient'], (msg) => {
+  msg.say("Let me help you with that :)");
+  var userStories = userStoryIdentifiersFromMessage(msg,HODINN_US_DETECTOR);
+    userStories.forEach(story => {
+    msg.say("> " + formatDeepLink(HODINN_DEEP_LINK,story));
+  })
 })
 
 
