@@ -53,7 +53,7 @@ slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg,text) => {
   var allUSLinks = "";
   var userStories = userStoryIdentifiersFromMessage(text,HODINN_US_DETECTOR);
     userStories.forEach(story => {
-    allUSLinks = allUsLinks.concat("UserStory " + formatDeepLink(HODINN_DEEP_LINK,story) + "\n");
+    allUSLinks = allUSLinks.concat("UserStory " + formatDeepLink(HODINN_DEEP_LINK,story) + "\n");
   });
   msg.say(">" + allUSLinks);
 })
