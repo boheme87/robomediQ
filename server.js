@@ -16,28 +16,33 @@ var slapp = Slapp({
 })
 
 
-
-const HODINN_US_DETECTOR = /^.*(INN-\d+)+.*/gi; //case insensitive (i) and multiple times (g)
+const HODINN_US_DETECTOR = /(INN-\d+)/gi; //case insensitive (i) and multiple times (g)
 const HODINN_DEEP_LINK = "https://humediq.jira.com/browse/";
 
 var userStoryIdentifiersFromMessage = function(message, regexToUse) {
-  return regexToUse.exec(message);
+  var matches = [];
+  var match = null;
+  while ((match = regexToUse.exec( message )) != null)
+    {
+        matches = matches.concat(match);
+    };
+  return matches;
+
 };
 
 var formatDeepLink = function(baseUrl, storyIdentifier) {
   return "<" + baseUrl + storyIdentifier + "|" + storyIdentifier + ">";
 };
 
-// var userstories = "hello INN-123 I have also INN-6 and INN-123123 ass";
-// var messageRegex = HODINN_US_DETECTOR;
-// var hodinnmatch = messageRegex.exec(userstories);
+var userstories = "hello INN-123 I have also INN-6 and INN-123123 ass";
+var output = userStoryIdentifiersFromMessage(userstories,HODINN_US_DETECTOR);
 
 
 //*********************************************
 // Setup different handlers for messages
 //*********************************************
-
-slapp.message(HODINN_US_DETECTOR, ['ambient'], (msg) => {
+// /^.*(INN-\d+).*/i
+slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg) => {
   msg.say("Let me help you with that :)");
   var userStories = userStoryIdentifiersFromMessage(msg,HODINN_US_DETECTOR);
     userStories.forEach(story => {
