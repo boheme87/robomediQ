@@ -48,6 +48,19 @@ slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg,text) => {
   msg.say("> UserStories: " + allUSLinks);
 })
 
+slapp.message('introduce', ['direct_mention', 'direct_message'], (msg) => {
+  // respond only 40% of the time
+    msg.say("Hey, I am your new colleague robomediQ and I can help you with deep-linking Jira UserStories.")
+  }
+})
+
+slapp.message('*', ['direct_mention', 'direct_message'], (msg) => {
+  // respond only 40% of the time
+  if (Math.random() < 0.4) {
+    msg.say([':wave:', ':pray:', ':raised_hands:'])
+  }
+})
+
 
 // attach Slapp to express server
 var server = slapp.attachToExpress(express())
