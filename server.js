@@ -15,7 +15,7 @@ var slapp = Slapp({
   context: Context()
 })
 
-const HODINN_US_DETECTOR = /(INN-\d+)/gi; //case insensitive (i) and multiple times (g)
+const HODINN_US_DETECTOR = /([A-Za-z]+\-[1-9][0-9]*)/gi; //case insensitive (i) and multiple times (g)
 const HODINN_DEEP_LINK = "https://humediq.jira.com/browse/";
 
 var userStoryIdentifiersFromMessage = function(message, regexToUse) {
@@ -37,27 +37,24 @@ var formatDeepLink = function(baseUrl, storyIdentifier) {
 // Setup different handlers for messages
 //*********************************************
 // /^.*(INN-\d+).*/i
-slapp.message(/^.*(INN-\d+).*/i, ['ambient'], (msg,text) => {
+slapp.message(/^.*([A-Za-z]+\-[1-9][0-9]*).*/i, ['ambient'], (msg,text) => {
    msg.say("Let me help you with that :)")
   var allUSLinks = "";
   var userStories = userStoryIdentifiersFromMessage(text,HODINN_US_DETECTOR);
     userStories.forEach(story => {
-      if (allUSLinks.length > 0) {allUSLinks = allUSLinks.concat(", ");}
+      var word = "Issue";
+      if (allUSLinks.length > 0) { word = "Issues"; allUSLinks = allUSLinks.concat(", ");}
       allUSLinks = allUSLinks.concat(formatDeepLink(HODINN_DEEP_LINK,story));
     });
-  msg.say("> UserStories: " + allUSLinks);
+  msg.say("> " + word + ": " + allUSLinks);
 });
 
 slapp.message('introduce', ['direct_mention', 'direct_message'], (msg) => {
-  // respond only 40% of the time
-    msg.say("Hey, I am your new colleague robomediQ and I can help you with deep-linking Jira UserStories.")
+    msg.say("Hey, I am your new colleague robomediQ and I can help you with deep-linking Jira issues.")
 })
 
 slapp.message('.*', ['direct_mention', 'direct_message'], (msg) => {
-  // respond only 40% of the time
-  if (Math.random() < 0.8) {
-    msg.say([':wave:', ':pray:', ':raised_hands:'])
-  }
+  msg.say([':wave:', ':pray:', ':raised_hands:'])
 })
 
 
