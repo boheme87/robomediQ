@@ -40,9 +40,9 @@ var formatDeepLink = function(baseUrl, storyIdentifier) {
 slapp.message(/^.*([A-Za-z]+\-[1-9][0-9]*).*/i, ['ambient'], (msg,text) => {
    msg.say("Let me help you with that :)")
   var allUSLinks = "";
+  var word = "Issue";
   var userStories = userStoryIdentifiersFromMessage(text,HODINN_US_DETECTOR);
     userStories.forEach(story => {
-      var word = "Issue";
       if (allUSLinks.length > 0) { word = "Issues"; allUSLinks = allUSLinks.concat(", ");}
       allUSLinks = allUSLinks.concat(formatDeepLink(HODINN_DEEP_LINK,story));
     });
